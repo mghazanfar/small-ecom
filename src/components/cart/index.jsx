@@ -18,7 +18,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { increment } from "../../store/items";
 import { Box, Button, CircularProgress, Grid, Paper } from "@material-ui/core";
 import axios from "axios";
-import { Link } from "react-router-dom";
 
 const drawerWidth = 240;
 
@@ -79,23 +78,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Main() {
+export default function Cart() {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
-  const [loading, setLoading] = React.useState(false);
-  const [items, setItems] = React.useState([]);
   const cartItems = useSelector((state) => state.reducer.items);
-  const total = cartItems.reduce((a, b) => {return a + b.price}, 0)
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    setLoading(true);
-    axios.get("https://fakestoreapi.com/products").then((res) => {
-      setItems(res.data);
-      setLoading(false);
-    });
-  }, []);
+  const total = cartItems.reduce((a, b) => {debugger;return a + b.price}, 0)
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -125,7 +113,7 @@ export default function Main() {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap>
-            Pet Shop
+            Cart items
           </Typography>
         </Toolbar>
       </AppBar>
@@ -166,54 +154,11 @@ export default function Main() {
       >
         <div className={classes.drawerHeader} />
         <Grid container spacing={6}>
-          <Grid item sm={8}>
-            <Box>
-              <h3>List items</h3>
-            </Box>
-            <Box>
-              {loading && <CircularProgress />}
-              {items.length > 0 &&
-                items.map(({ image, title, price, description }) => (
-                  <Paper elevation={12} style={{ marginBottom: 16 }}>
-                    <Box display={"flex"}>
-                      <Box display="flex" p={3} alignItems="center" style={{flex:1}}>
-                        <Box mr={2}>
-                          <img
-                            src={image}
-                            style={{ width: 70, height: 70 }}
-                            alt="item"
-                          />
-                        </Box>
-                        <Box>
-                          <Box display={"flex"} justifyContent="space-between">
-                            <h4>{title}</h4>
-                          </Box>
-                          <Box my={1}>${price}</Box>
-                          <Box>{description}</Box>
-                        </Box>
-                      </Box>
-                      <Button
-                        variant="contained"
-                        color="secondary"
-                        onClick={() =>
-                          dispatch(
-                            increment({ image, title, price, description })
-                          )
-                        }
-                      >
-                        Add
-                      </Button>
-                    </Box>
-                  </Paper>
-                ))}
-            </Box>
-          </Grid>
-          <Grid item sm={4}>
+          <Grid item sm={12}>
             <Box mt={6}>
               {cartItems.length > 0 && (
                 <Paper>
                   <Box p={3}>
-                    <h3>Cart Items</h3>
                     <Box style={{ maxHeight: 400, overflowY: "auto" }}>
                       {cartItems.map(
                         ({ image, title, price, description }, index) => (
@@ -250,10 +195,9 @@ export default function Main() {
                       )}
                     </Box>
                   </Box>
-                  <Link to="/cart">
-                  <Button color="primary" fullWidth variant="contained" >
+                  <Button color="primary" fullWidth variant="contained">
                     Checkout ${total || 0}
-                  </Button></Link>
+                  </Button>
                 </Paper>
               )}
             </Box>
