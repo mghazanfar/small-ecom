@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import clsx from "clsx";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
@@ -14,10 +14,8 @@ import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
-import { useSelector, useDispatch } from "react-redux";
-import { increment } from "../../store/items";
-import { Box, Button, CircularProgress, Grid, Paper } from "@material-ui/core";
-import axios from "axios";
+import { useSelector } from "react-redux";
+import { Box, Button, Grid, Paper } from "@material-ui/core";
 
 const drawerWidth = 240;
 
